@@ -1,0 +1,65 @@
+plugins {
+    id 'java'
+    id 'java-library'
+    id 'maven-publish'
+}
+
+group 'com.ueby'
+version '1.0-SNAPSHOT'
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+    withJavadocJar()
+    withSourcesJar()
+}
+
+jar {
+    manifest {
+        attributes("Implementation-Title": "UEBY-LOTERIA-CRAWLERS",
+                "Implementation-Version": archiveVersion)
+    }
+}
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+    jcenter()
+}
+
+dependencies {
+    compile group: 'org.apache.httpcomponents', name: 'fluent-hc', version: '4.5.12'
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.9.8'
+    compile group: 'org.jsoup', name: 'jsoup', version: '1.13.1'
+    compile group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.13.1'
+    compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.13.1'
+
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.6.+")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.6.+")
+}
+
+javadoc {
+    title 'UEBY LOTERIA CRAWLERS API'
+    options.encoding = "ISO-8859-1"
+    options.author = true
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+        }
+    }
+    repositories {
+        mavenLocal()
+    }
+}
+
+test {
+    useJUnitPlatform()
+}
+
+wrapper {
+    gradleVersion = '6.3'
+    distributionUrl = " https://services.gradle.org/distributions/gradle-${gradleVersion}-bin.zip"
+}
