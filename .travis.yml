@@ -13,8 +13,7 @@ email:
 addons:
   sonarcloud:
     organization: "algarves"
-    token:
-      secure: "XyKii5KCkQzGENxG895PbnR0M5028DPF4MCGOpdoYzBzPrW4ehYh1ppfsZAxZicbESN9XlMH0gHBC7EWCofgfhl9flpINixMWScqzA2wUL3oNYKrJGSfzqTuRmXwz5O4lRR65eTkg8FGh/2UHeItfQqI5mBGdX4TgxDq6LjokM5H6EblWE+3OoTTRKT0TyyfjOfTh634Q+X3zCwymRkMNv33VJPv5NoubULqu+g9XAmX+9ZxGnyHp+ujZjTreQYjowVim7UxdxIwFa1rrazIlYTuXeUn4f61KS4W0bHeHuQohFGIhcvUOY5prCimybgCWZEo+qfzcYywxZ5FyYsh9Rt+0p+cKkb1A+itum2529Cv+7COouA5qYlDwxZFCcyNE60BvjQiiqH6q9ZbrGlnl4zeMA+gclF57LA20AqtNQNzkYsp8aYlu0+CABSO8/DpAVAAnTmCNZOTdyzew3JDo3aRnDIVtrc20p9aGE/q97StBmis/IOJlxvQKMkMPFnq0Usi2T4w5+XZ6xczqpugC+660FZVFl0xr7hC5TkZs4TNxlRJkwF4emSE2kjibW/DxChaDxjkP+oz9VbX56zyJ+qMyk60Jqt14jVa71pIOOS96DbJ6T4eFC9FOkFRaXJrTAjLT8MR9Diklx93sPeYQaZZBIhWzeuWAEJOAFxupJw="
+    token: ${SONAR_TOKEN}
 
 script:
   - ./gradlew sonarqube
