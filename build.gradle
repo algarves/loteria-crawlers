@@ -63,16 +63,11 @@ test {
 
 wrapper {
     gradleVersion = '6.3'
-    distributionUrl = " https://services.gradle.org/distributions/gradle-${gradleVersion}-bin.zip"
+    distributionUrl = "https://services.gradle.org/distributions/gradle-${gradleVersion}-bin.zip"
 }
 
 sonarqube {
     properties {
-        property "sonar.host.url", "https://sonarcloud.io"
         property "sonar.projectKey", "algarves_loteria-crawlers"
-        property "sonar.organization", "algarves"
-        property "sonar.projectName", vertical
-        property "sonar.projectVersion", version
-        property "sonar.login", sonarLogin
     }
 }
