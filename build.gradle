@@ -68,5 +68,7 @@ wrapper {
 sonarqube {
     properties {
         property "sonar.projectKey", "algarves_loteria-crawlers"
+        property "sonar.projectName", vertical
+        property "sonar.projectVersion", version
     }
 }
