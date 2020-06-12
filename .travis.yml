@@ -12,7 +12,15 @@ addons:
   sonarcloud:
     organization: "algarves"
     token:
-      secure: "$SONAR_TOKEN" # encrypted value of your token
+      secure: "dU9//7z5Q8VO5SyZg52psF3en0oTIx7lQ2Gkz8sAatiUr5j1GiURQyKNxQfGiTKUyDdnOrGkv2nBnoctdsjBxlMjLUXLk2cBw6Uln+Hh/xCH25Mt6MHAMuwZ68x46OHyLlDdRe/pb7vHqzC7p+6dXtALvAKqcQQyozvznsjZQtfa36rtX3YFJpN+JUq2v+rlD9wpmzDBbkvS6tLy9JJzVXUVjuAHwpu7UmQR3cLifF/u8ji28KXiL8jvNHm76pO33dMKBEWRG4Ck8dk8k0nqlNOkaoUBBpN5c+Rn9dluW77Jh7UYhlyLw+CWhkhERx75aOmyVXwLdEFSPcSH32Nz+DEBDnB7+hP2brYC0rUxIkUyYXEiotA6u44rZhkaXi6KKi9fZU6MGET9Mq5+KnH87bqBZa5JxuYZs8JoMz/JvKXK5VGbTdt052gZeJ1EvIDHTNnQsJeqFJECquqV+2RzaPoMNXy0zZLo0Tz3c8tVwb51Oh0Mxuy0nS47D6I6SGZRQyaetul6dxTMe9Nmne2LunaPAaVc5+5VA+8Jjk7ewZOO51kNj49eC/4rgdy+QXJSmQkJdRe61wqDSoeEom5e5SBAzQxb7cRsVTwC5ip+raZMoeCYDcqe5pGdUEG2nZcr+X2NXRocpOQTptSuciweK89LFGa4LaoJkQThcsr1XA0="
 
 script:
   - ./gradlew sonarqube
+
+before_cache:
+  - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+  - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+cache:
+  directories:
+    - $HOME/.gradle/caches/
+    - $HOME/.gradle/wrapper/
