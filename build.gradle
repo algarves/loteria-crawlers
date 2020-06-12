@@ -2,6 +2,7 @@ plugins {
     id 'java'
     id 'java-library'
     id 'maven-publish'
+    id 'org.sonarqube' version '2.8'
 }
 
 group 'com.ueby'
@@ -62,4 +63,10 @@ test {
 wrapper {
     gradleVersion = '6.3'
     distributionUrl = " https://services.gradle.org/distributions/gradle-${gradleVersion}-bin.zip"
+}
+
+sonarqube {
+    properties {
+        property "sonar.projectKey", "algarves_loteria-crawlers"
+    }
 }
