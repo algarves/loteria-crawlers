@@ -67,7 +67,9 @@ wrapper {
 
 sonarqube {
     properties {
+        property "sonar.host.url", "https://sonarcloud.io"
         property "sonar.projectKey", "algarves_loteria-crawlers"
+        property "sonar.organization", "algarves"
         property "sonar.projectName", vertical
         property "sonar.projectVersion", version
     }

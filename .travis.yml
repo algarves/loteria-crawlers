@@ -11,8 +11,6 @@ email:
 addons:
   sonarcloud:
     organization: "algarves"
-    token:
-      secure: ${SONAR_TOKEN} # encrypted value of your token
 
 script:
   - sonar-scanner
