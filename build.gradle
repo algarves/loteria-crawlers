@@ -73,5 +73,6 @@ sonarqube {
         property "sonar.organization", "algarves"
         property "sonar.projectName", vertical
         property "sonar.projectVersion", version
+        property "sonar.login", sonarLogin
     }
 }
