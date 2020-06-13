@@ -5,8 +5,7 @@ jdk: openjdk8
 addons:
   sonarcloud:
     organization: "algarves"
-    token:
-      secure: $SONAR_TOKEN
+    token: $SONAR_TOKEN
 
 script:
   - ./gradlew check
