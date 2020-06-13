@@ -2,11 +2,8 @@ plugins {
     id 'java'
     id 'java-library'
     id 'maven-publish'
-    id 'org.sonarqube' version '2.8'
+    id 'jacoco'
 }
-
-apply plugin: 'java'
-apply plugin: 'jacoco'
 
 group 'com.ueby'
 version '1.0-SNAPSHOT'
@@ -63,16 +60,17 @@ test {
     useJUnitPlatform()
 }
 
+jacoco {
+    toolVersion = "0.8.2"
+}
+
+jacocoTestReport {
+    reports {
+        xml.enabled true
+    }
+}
+
 wrapper {
     gradleVersion = '6.3'
     distributionUrl = "https://services.gradle.org/distributions/gradle-${gradleVersion}-bin.zip"
-}
-
-sonarqube {
-    properties {
-        property "sonar.projectKey", "algarves_loteria-crawlers"
-        property "sonar.organization", "algarves"
-        property "sonar.projectName", vertical
-        property "sonar.projectVersion", version
-    }
 }

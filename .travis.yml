@@ -1,14 +1,6 @@
 language: java
 dist: trusty
 jdk: openjdk8
-sudo: false
-install: true
-
-email:
-  recipients:
-    - dev+travisloteria-crawlers@ueby.com
-  on_success: change
-  on_failure: always
 
 addons:
   sonarcloud:
@@ -17,7 +9,9 @@ addons:
       secure: $SONAR_TOKEN
 
 script:
-  - ./gradlew sonarqube -Dsonar.login=$SONAR_TOKEN -Dsonar.projectKey=$SONAR_PROJECT_KEY
+  - ./gradlew check
+  - ./gradlew jacocoTestReport
+  - sonar-scanner
 
 cache:
   directories:
@@ -25,3 +19,9 @@ cache:
     - '$HOME/.sonar/cache'
     - '$HOME/.gradle'
     - '.gradle'
+
+email:
+  recipients:
+    - dev+travisloteria-crawlers@ueby.com
+  on_success: change
+  on_failure: always
