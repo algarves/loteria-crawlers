@@ -2,7 +2,7 @@ plugins {
     id 'java'
     id 'java-library'
     id 'maven-publish'
-    id 'org.sonarqube' version '2.7.1'
+    id 'org.sonarqube'
 }
 
 apply plugin: 'java'
@@ -68,11 +68,12 @@ wrapper {
     distributionUrl = "https://services.gradle.org/distributions/gradle-${gradleVersion}-bin.zip"
 }
 
-sonarqube {
+task sonarqube {
     properties {
         property "sonar.projectKey", "algarves_loteria-crawlers"
         property "sonar.organization", "algarves"
         property "sonar.projectName", vertical
         property "sonar.projectVersion", version
+        property "sonar.login", sonarLogin
     }
 }
