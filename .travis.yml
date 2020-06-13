@@ -13,7 +13,8 @@ email:
 addons:
   sonarcloud:
     organization: "algarves"
-    token: ${SONAR_TOKEN}
+    token:
+      secure: ${SONAR_TOKEN}
 
 script:
   - ./gradlew sonarqube
