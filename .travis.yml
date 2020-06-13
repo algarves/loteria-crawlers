@@ -10,10 +10,11 @@ email:
 addons:
   sonarcloud:
     organization: "algarves"
-    token: ${SONAR_TOKEN}
+    token:
+      secure: ${SONAR_TOKEN}
 
 script:
-  - sonar-scanner
+  - ./gradlew sonarqube
 
 cache:
   directories:
