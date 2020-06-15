@@ -6,21 +6,22 @@ addons:
   sonarcloud:
     organization: algarves
     token: "$SONAR_TOKEN"
+
 script:
-- "./gradlew check"
-- "./gradlew jacocoTestReport"
-- sonar-scanner
+  - "./gradlew check"
+  - "./gradlew jacocoTestReport"
+  - sonar-scanner
 
 cache:
   directories:
-  - "$HOME/.m2/repository"
-  - "$HOME/.sonar/cache"
-  - "$HOME/.gradle"
-  - ".gradle"
-  -
+    - "$HOME/.m2/repository"
+    - "$HOME/.sonar/cache"
+    - "$HOME/.gradle"
+    - ".gradle"
+
 email:
   recipients:
-  - dev+travisloteria-crawlers@ueby.com
+    - dev+travisloteria-crawlers@ueby.com
   on_success: change
   on_failure: always
 
