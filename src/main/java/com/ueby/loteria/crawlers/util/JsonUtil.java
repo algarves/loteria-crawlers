@@ -3,23 +3,32 @@ package com.ueby.loteria.crawlers.util;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.fasterxml.jackson.module.paramnames.ParameterNamesModule;
+import lombok.extern.log4j.Log4j2;
+
 import java.io.IOException;
 import java.util.Objects;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 /**
  * @author Algarves, Khristian
  */
+@Log4j2
 public final class JsonUtil {
 
-  private static final Logger LOGGER = LogManager.getLogger();
-  private static volatile ObjectMapper mapper = null;
+  private static final ObjectMapper mapper;
 
   static {
     mapper = new ObjectMapper();
-    mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
+    mapper.registerModule(new JavaTimeModule())
+        .registerModule(new ParameterNamesModule())
+        .registerModule(new Jdk8Module())
+        .registerModule(new JavaTimeModule())
+        .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
         .configure(DeserializationFeature.FAIL_ON_NUMBERS_FOR_ENUMS, false)
+        .configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false)
         .enable(DeserializationFeature.USE_BIG_DECIMAL_FOR_FLOATS);
   }
 
@@ -27,7 +36,7 @@ public final class JsonUtil {
     try {
       return mapper.writeValueAsString(data);
     } catch (Exception e) {
-      LOGGER.error(e.getLocalizedMessage(), e);
+      log.error(e.getLocalizedMessage(), e);
       throw new RuntimeException(e);
     }
   }
@@ -37,10 +46,10 @@ public final class JsonUtil {
     try {
       return mapper.readValue(json, clazz);
     } catch (JsonParseException e) {
-      LOGGER.error(e.getLocalizedMessage(), e);
+      log.error(e.getLocalizedMessage(), e);
       throw new RuntimeException(e.getLocalizedMessage());
     } catch (Exception e) {
-      LOGGER.error(e.getLocalizedMessage(), e);
+      log.error(e.getLocalizedMessage(), e);
       throw new RuntimeException(e.getLocalizedMessage());
     }
   }

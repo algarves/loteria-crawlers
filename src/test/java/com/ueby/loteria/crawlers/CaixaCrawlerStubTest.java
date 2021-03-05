@@ -12,21 +12,17 @@ public class CaixaCrawlerStubTest {
   @DisplayName("Getters and Setters of CaixaCrawlerStub")
   @Test
   public void shouldNewInstanceOfCaixaCrawlerStub() {
-    CaixaCrawlerStub caixaCrawlerStub = new CaixaCrawlerStub();
-    caixaCrawlerStub.setLinkHref("LinkHref");
-    caixaCrawlerStub.setUrlBuscarResultado("UrlBuscarResultado");
-    caixaCrawlerStub.setConcourse(1955);
-    caixaCrawlerStub.setHtmlContent("Html content");
+    CaixaCrawlerStub caixaCrawlerStub = new CaixaCrawlerStub.Builder()
+        .withLinkHref("LinkHref")
+        .withUrlBuscarResultado("UrlBuscarResultado")
+        .withConcurso(1955)
+        .withHtmlContent("Html content")
+        .build();
 
-    String linkHref = caixaCrawlerStub.getLinkHref();
-    String urlBuscarResultado = caixaCrawlerStub.getUrlBuscarResultado();
-    Integer concouse = caixaCrawlerStub.getConcourse();
-    String htmlContent = caixaCrawlerStub.getHtmlContent();
-
-    Assertions.assertEquals("LinkHref", linkHref);
-    Assertions.assertEquals("UrlBuscarResultado", urlBuscarResultado);
-    Assertions.assertEquals(1955, concouse);
-    Assertions.assertEquals("Html content", htmlContent);
+    Assertions.assertEquals("LinkHref", caixaCrawlerStub.getLinkHref());
+    Assertions.assertEquals("UrlBuscarResultado", caixaCrawlerStub.getUrlBuscarResultado());
+    Assertions.assertEquals(1955, caixaCrawlerStub.getConcurso());
+    Assertions.assertEquals("Html content", caixaCrawlerStub.getHtmlContent());
   }
 
 }

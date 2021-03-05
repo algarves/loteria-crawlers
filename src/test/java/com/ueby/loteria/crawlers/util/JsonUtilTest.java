@@ -1,10 +1,11 @@
 package com.ueby.loteria.crawlers.util;
 
-import java.util.HashMap;
-import java.util.Map;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author Algarves, Khristian
@@ -13,9 +14,9 @@ public class JsonUtilTest {
 
   private static final String JSON_EXAMPLE = "{\"key\":\"value\"}";
 
-  @DisplayName("From object to json string")
+  @DisplayName("Convert Object to JSON")
   @Test
-  public void shouldToJson() {
+  public void shouldConvertObjectToJson() {
     Map<String, String> obj = new HashMap<String, String>();
     obj.put("key", "value");
 
@@ -23,18 +24,18 @@ public class JsonUtilTest {
     Assertions.assertEquals(JSON_EXAMPLE, json);
   }
 
-  @DisplayName("From json string to object")
+  @DisplayName("JSON on object")
   @Test
-  public void shouldFromJson() {
-    JsonObjectTest obj = JsonUtil.fromJson(JSON_EXAMPLE, JsonObjectTest.class);
+  public void shouldJsonOnObject() {
+    JsonObjectDtoTest obj = JsonUtil.fromJson(JSON_EXAMPLE, JsonObjectDtoTest.class);
     Assertions.assertEquals("value", obj.getKey());
   }
 
-  @DisplayName("From json string to object")
+  @DisplayName("Throw Nullpointer Exception from JSON")
   @Test
-  public void shouldNullpointerFromJson() {
+  public void shouldThrowNullpointerExceptionFromJson() {
     Exception exception = Assertions.assertThrows(NullPointerException.class, () -> {
-      JsonUtil.fromJson(null, JsonObjectTest.class);
+      JsonUtil.fromJson(null, JsonObjectDtoTest.class);
     });
 
     String expectedMessage = "Value cannot be null.";
