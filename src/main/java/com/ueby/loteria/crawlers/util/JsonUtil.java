@@ -7,6 +7,8 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.fasterxml.jackson.module.paramnames.ParameterNamesModule;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 
 import java.io.IOException;
@@ -16,7 +18,8 @@ import java.util.Objects;
  * @author Algarves, Khristian
  */
 @Log4j2
-public final class JsonUtil {
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+public class JsonUtil {
 
   private static final ObjectMapper mapper;
 
