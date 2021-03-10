@@ -17,6 +17,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
+import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.concurrent.TimeUnit;
 
@@ -68,7 +69,7 @@ public class CaixaWebCrawlerService extends AbstractCrawlerService {
    * @throws InterruptedException     When the process is interrupted.
    * @throws CaixaWebCrawlerException If Number of attempts exhausted.
    */
-  private void recall() throws InterruptedException, CaixaWebCrawlerException {
+  private void recall() throws InterruptedException {
     if (attempts <= MAX_ATTEMPTS) {
       long threadSleep = getSleep();
 
@@ -79,7 +80,7 @@ public class CaixaWebCrawlerService extends AbstractCrawlerService {
       call();
       attempts++;
     } else {
-      throw new CaixaWebCrawlerException("Oops! Number of attempts exhausted.");
+      throw new InterruptedException("Oops! Number of attempts exhausted.");
     }
   }
 
@@ -102,24 +103,25 @@ public class CaixaWebCrawlerService extends AbstractCrawlerService {
       log.debug("Response status - {}", responseStatus.getStatusCode());
 
       if (HttpStatus.SC_OK == responseStatus.getStatusCode()) {
-        if (html != null) {
-          checkContent(html);
-        } else {
-          recall();
-        }
+        checkContent(html);
       } else {
-        log.error("[" + responseStatus.getStatusCode() + "] - {} ",
+        throw new CaixaWebCrawlerException("[" + responseStatus.getStatusCode() + "] - " +
             responseStatus.getReasonPhrase());
-        recall();
       }
     } catch (CaixaWebCrawlerException e) {
       log.error(e.getLocalizedMessage(), e);
-    } catch (Exception e) {
-      log.fatal(e.getLocalizedMessage(), e);
+      try {
+        recall();
+      } catch (InterruptedException ie) {
+        log.fatal(ie.getLocalizedMessage(), ie);
+        Thread.currentThread().interrupt();
+      }
+    } catch (IOException | URISyntaxException ex) {
+      log.error(ex.getLocalizedMessage(), ex);
     }
   }
 
-  private void checkContent(String html) throws InterruptedException, CaixaWebCrawlerException {
+  private void checkContent(String html) throws CaixaWebCrawlerException {
     Document doc = Jsoup.parse(html);
     Element link = doc.getElementById(HTML_ELEMENT_FIRST);
     Element input = doc.select(HTML_ELEMENT_SECOND).first();
@@ -127,8 +129,7 @@ public class CaixaWebCrawlerService extends AbstractCrawlerService {
     if (firstRequest) {
       checkContentFirstRequest(link, input);
     } else if (html.startsWith(HTML_DOCTYPE)) {
-      log.error("Oops! No valid content.");
-      recall();
+      throw new CaixaWebCrawlerException("Oops! No valid content.");
     }
 
     if (!html.startsWith(HTML_DOCTYPE)) {
@@ -138,21 +139,19 @@ public class CaixaWebCrawlerService extends AbstractCrawlerService {
     firstRequest = false;
   }
 
-  private void checkContentFirstRequest(Element link, Element input) throws InterruptedException, CaixaWebCrawlerException {
+  private void checkContentFirstRequest(Element link, Element input) throws CaixaWebCrawlerException {
     if (link != null) {
       String linkHref = link.attr("href");
       this.caixaCrawlerStub.setLinkHref(linkHref);
     } else {
-      log.error("Oops! I couldn't find the first element '" + HTML_ELEMENT_FIRST + "'.");
-      recall();
+      throw new CaixaWebCrawlerException("Oops! I couldn't find the first element '" + HTML_ELEMENT_FIRST + "'.");
     }
 
     if (input != null) {
       String inputValue = input.attr("value");
       this.caixaCrawlerStub.setUrlBuscarResultado(inputValue);
     } else {
-      log.error("Oops! I couldn't find the second element '" + HTML_ELEMENT_SECOND + "'.");
-      recall();
+      throw new CaixaWebCrawlerException("Oops! I couldn't find the second element '" + HTML_ELEMENT_SECOND + "'.");
     }
   }
 
