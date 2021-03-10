@@ -114,6 +114,7 @@ public class CaixaWebCrawlerService extends AbstractCrawlerService {
         recall();
       } catch (InterruptedException ie) {
         log.fatal(ie.getLocalizedMessage(), ie);
+        Thread.currentThread().interrupt();
       }
     } catch (IOException | URISyntaxException ex) {
       log.error(ex.getLocalizedMessage(), ex);
