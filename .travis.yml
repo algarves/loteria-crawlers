@@ -11,6 +11,7 @@ script:
   - "./gradlew check"
   - "./gradlew jacocoTestReport"
   - sonar-scanner
+  - "./gradlew publish"
 
 cache:
   directories:
