@@ -6,7 +6,7 @@ plugins {
 }
 
 group 'com.ueby'
-version '2.2-SNAPSHOT'
+version '2.3-SNAPSHOT'
 
 java {
     sourceCompatibility = JavaVersion.VERSION_1_8
