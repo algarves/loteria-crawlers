@@ -3,6 +3,8 @@ plugins {
     id 'java-library'
     id 'maven-publish'
     id 'jacoco'
+    id 'org.sonarqube' version '3.2.0'
+    id 'com.adarshr.test-logger' version '3.0.0'
 }
 
 group 'com.ueby'
@@ -30,19 +32,19 @@ repositories {
 
 dependencies {
     // Apache Fluent
-    compile group: 'org.apache.httpcomponents', name: 'fluent-hc', version: '4.5.+'
+    implementation group: 'org.apache.httpcomponents', name: 'fluent-hc', version: '4.5.+'
 
     // Jackson
-    compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.9.+'
-    compile group: 'com.fasterxml.jackson.module', name: 'jackson-module-parameter-names', version: '2.9.+'
-    compile group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jdk8', version: '2.9.+'
-    compile group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jsr310', version: '2.9.+'
+    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.9.+'
+    implementation group: 'com.fasterxml.jackson.module', name: 'jackson-module-parameter-names', version: '2.9.+'
+    implementation group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jdk8', version: '2.9.+'
+    implementation group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jsr310', version: '2.9.+'
 
-    compile group: 'org.jsoup', name: 'jsoup', version: '1.13.+'
+    implementation group: 'org.jsoup', name: 'jsoup', version: '1.13.+'
 
     // Log4j
-    compile group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.13.+'
-    compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.13.+'
+    implementation group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.13.+'
+    implementation group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.13.+'
 
     // Lombok
     compileOnly 'org.projectlombok:lombok:1.18.+'
@@ -94,7 +96,4 @@ jacocoTestReport {
     }
 }
 
-wrapper {
-    gradleVersion = '6.3'
-    distributionUrl = "https://services.gradle.org/distributions/gradle-${gradleVersion}-bin.zip"
-}
+apply from: "$project.rootDir/sonar.gradle"

@@ -1,0 +1,17 @@
+apply plugin: "org.sonarqube"
+
+def coverageExclusions = [
+        "**/test/**"
+]
+
+sonarqube {
+    properties {
+        property "sonar.sources", "src/main/*.java"
+        property "sonar.coverage.exclusions", coverageExclusions.join(",")
+        property "sonar.tests", "src/test/*.java"
+        property "sonar.java.binaries", "$build/classes/java/main/**/*.class"
+        property "sonar.java.libraries", "**.jar"
+        property "sonar.projectName", rootProject.name
+        property "sonar.projectKey", sonarQubeProjectKey
+    }
+}
