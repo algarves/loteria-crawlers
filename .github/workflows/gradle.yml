@@ -27,8 +27,8 @@ jobs:
       - name: Build with Gradle
         run: ./gradlew --build-cache assemble
 
-      - name: Test with Gradle
-        run: ./gradlew check
+#      - name: Test with Gradle
+#        run: ./gradlew check
 
       - name: Generate test report with Gradle
         run: ./gradlew jacocoTestReport sonarqube -Dsonar.login=${{ secrets.SONAR_KEY }} -Dsonar.qualitygate.wait=true
