@@ -32,9 +32,6 @@ jobs:
       
     - name: Generate test report with Gradle
       run: ./gradlew jacocoTestReport
-      
-    - name: SonarCloud Scan
-      uses: SonarSource/sonarcloud-github-action@be5b9864e49a94a0aca212054e77b919228cb059
-      
+           
     - name: Upload a Build Artifact
       uses: actions/upload-artifact@v2.2.4
