@@ -31,7 +31,7 @@ jobs:
         run: ./gradlew check
 
       - name: Generate test report with Gradle
-        run: ./gradlew jacocoTestReport -Dsonar.login=${{ secrets.SONAR_KEY }} -Dsonar.qualitygate.wait=true
+        run: ./gradlew jacocoTestReport sonarqube -Dsonar.login=${{ secrets.SONAR_KEY }} -Dsonar.qualitygate.wait=true
 
-      - name: Upload a Build Artifact
-        run: ./gradlew publish
+#      - name: Upload a Build Artifact
+#        run: ./gradlew publish
