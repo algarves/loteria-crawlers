@@ -12,6 +12,7 @@ sonarqube {
         property "sonar.java.binaries", "$build/classes/java/main/**/*.class"
         property "sonar.java.libraries", "**.jar"
         property "sonar.projectName", rootProject.name
+        property "sonar.organization", sonarQubeProjectKey
         property "sonar.projectKey", sonarQubeProjectKey
         property "sonar.host.url", 'https://sonarcloud.io/'
     }
