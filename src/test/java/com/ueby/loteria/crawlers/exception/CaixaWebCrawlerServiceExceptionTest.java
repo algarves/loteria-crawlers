@@ -6,10 +6,10 @@ import org.junit.jupiter.api.Test;
 /**
  * @author Algarves, Khristian
  */
-public class CaixaWebCrawlerServiceExceptionTest {
+class CaixaWebCrawlerServiceExceptionTest {
 
   @Test
-  public void shouldCaixaWebCrawlerExceptionTest() {
+  void shouldCaixaWebCrawlerExceptionTest() {
     Exception exception = Assertions.assertThrows(
         CaixaWebCrawlerException.class,
         () -> {

@@ -7,12 +7,12 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.fasterxml.jackson.module.paramnames.ParameterNamesModule;
+import com.ueby.loteria.crawlers.exception.JsonParseErrorException;
+import java.io.IOException;
+import java.util.Objects;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-
-import java.io.IOException;
-import java.util.Objects;
 
 /**
  * @author Algarves, Khristian
@@ -39,8 +39,8 @@ public class JsonUtil {
     try {
       return mapper.writeValueAsString(data);
     } catch (Exception e) {
-      log.error(e.getLocalizedMessage(), e);
-      throw new RuntimeException(e);
+      log.error(e.getMessage(), e);
+      throw new JsonParseErrorException(e.getMessage(), e);
     }
   }
 
@@ -50,10 +50,10 @@ public class JsonUtil {
       return mapper.readValue(json, clazz);
     } catch (JsonParseException e) {
       log.error(e.getLocalizedMessage(), e);
-      throw new RuntimeException(e.getLocalizedMessage());
+      throw new JsonParseErrorException(e.getMessage());
     } catch (Exception e) {
       log.error(e.getLocalizedMessage(), e);
-      throw new RuntimeException(e.getLocalizedMessage());
+      throw new JsonParseErrorException(e.getMessage());
     }
   }
 

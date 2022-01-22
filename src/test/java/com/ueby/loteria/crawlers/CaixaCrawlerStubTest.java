@@ -7,11 +7,11 @@ import org.junit.jupiter.api.Test;
 /**
  * @author Algarves, Khristian
  */
-public class CaixaCrawlerStubTest {
+class CaixaCrawlerStubTest {
 
   @DisplayName("Getters and Setters of CaixaCrawlerStub")
   @Test
-  public void shouldNewInstanceOfCaixaCrawlerStub() {
+  void shouldNewInstanceOfCaixaCrawlerStub() {
     CaixaCrawlerStub caixaCrawlerStub = new CaixaCrawlerStub.Builder()
         .withLinkHref("LinkHref")
         .withUrlBuscarResultado("UrlBuscarResultado")

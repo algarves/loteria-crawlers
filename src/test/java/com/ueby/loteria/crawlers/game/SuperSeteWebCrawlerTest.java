@@ -1,26 +1,28 @@
 package com.ueby.loteria.crawlers.game;
 
 import com.ueby.loteria.crawlers.CaixaGameType;
+import com.ueby.loteria.crawlers.IntegrationTest;
 import com.ueby.loteria.crawlers.service.CaixaWebCrawlerService;
 import org.junit.jupiter.api.*;
 
 /**
  * @author Algarves, Khristian
  */
+@IntegrationTest
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class SuperSeteWebCrawlerTest {
+class SuperSeteWebCrawlerTest {
 
   private CaixaWebCrawlerService crawler;
   private static final CaixaGameType caixaGameType = CaixaGameType.SUPER_SETE;
 
   @BeforeAll
-  public void setUp() {
+  void setUp() {
     crawler = new CaixaWebCrawlerService(caixaGameType);
   }
 
   @DisplayName("Supersete - Request by last contest")
   @Test
-  public void shouldLotofacilWebCrawlerByLastContest() {
+  void shouldLotofacilWebCrawlerByLastContest() {
     crawler.byLastContest();
 
     CaixaGameResult caixaGameResult = crawler.getMatchResult();
@@ -31,7 +33,7 @@ public class SuperSeteWebCrawlerTest {
 
   @DisplayName("Supersete - Request by number contest")
   @Test
-  public void shouldLotofacilWebCrawlerByNumberContest() {
+  void shouldLotofacilWebCrawlerByNumberContest() {
     final Integer contest = 60;
 
     crawler.byContestNumber(contest);

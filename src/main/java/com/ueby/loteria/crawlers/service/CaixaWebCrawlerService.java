@@ -6,6 +6,9 @@ import com.ueby.loteria.crawlers.exception.CaixaWebCrawlerException;
 import com.ueby.loteria.crawlers.game.CaixaGameResult;
 import com.ueby.loteria.crawlers.util.JsonUtil;
 import com.ueby.loteria.crawlers.util.RandomUtil;
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.util.concurrent.TimeUnit;
 import lombok.extern.log4j.Log4j2;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
@@ -17,18 +20,11 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
-import java.io.IOException;
-import java.net.URISyntaxException;
-import java.util.concurrent.TimeUnit;
-
 /**
  * @author Algarves, Khristian
  */
 @Log4j2
 public class CaixaWebCrawlerService extends AbstractCrawlerService {
-
-  private static final String BASE_URL = "http://loterias.caixa.gov.br";
-  private static final String HOME_URL_PATH = "/wps/portal/loterias";
 
   private static final String HTML_ELEMENT_FIRST = "com.ibm.lotus.NavStateUrl";
   private static final String HTML_ELEMENT_SECOND = "input[type=hidden][id=urlBuscarResultado]";
@@ -37,10 +33,10 @@ public class CaixaWebCrawlerService extends AbstractCrawlerService {
   private static final int MAX_ATTEMPTS = 5;
   private int attempts = 1;
 
-  private Boolean firstRequest = true;
+  private boolean firstRequest = true;
 
-  CaixaGameType caixaGameType;
-  CaixaCrawlerStub caixaCrawlerStub;
+  final CaixaGameType caixaGameType;
+  final CaixaCrawlerStub caixaCrawlerStub;
 
   public CaixaWebCrawlerService(CaixaGameType caixaGameType) {
     this.caixaCrawlerStub = new CaixaCrawlerStub();
@@ -85,14 +81,14 @@ public class CaixaWebCrawlerService extends AbstractCrawlerService {
   }
 
   private long getSleep() {
-    return TimeUnit.SECONDS.toMillis(RandomUtil.getRandomNumInRange(1, 30));
+    return TimeUnit.SECONDS.toMillis(RandomUtil.getRandomNumInRange(1, 5));
   }
 
   private void call() {
     try {
       final String url = getUrl();
 
-      log.debug("Request URL '{}' - {}", this.caixaGameType, url);
+      log.debug("Request URL '{}' - {}", caixaGameType, url);
 
       Response response = get(url);
 
@@ -133,25 +129,28 @@ public class CaixaWebCrawlerService extends AbstractCrawlerService {
     }
 
     if (!html.startsWith(HTML_DOCTYPE)) {
-      this.caixaCrawlerStub.setHtmlContent(html);
+      caixaCrawlerStub.setHtmlContent(html);
     }
 
     firstRequest = false;
   }
 
-  private void checkContentFirstRequest(Element link, Element input) throws CaixaWebCrawlerException {
+  private void checkContentFirstRequest(Element link, Element input)
+      throws CaixaWebCrawlerException {
     if (link != null) {
       String linkHref = link.attr("href");
-      this.caixaCrawlerStub.setLinkHref(linkHref);
+      caixaCrawlerStub.setLinkHref(linkHref);
     } else {
-      throw new CaixaWebCrawlerException("Oops! I couldn't find the first element '" + HTML_ELEMENT_FIRST + "'.");
+      throw new CaixaWebCrawlerException(
+          "Oops! I couldn't find the first element '" + HTML_ELEMENT_FIRST + "'.");
     }
 
     if (input != null) {
       String inputValue = input.attr("value");
-      this.caixaCrawlerStub.setUrlBuscarResultado(inputValue);
+      caixaCrawlerStub.setUrlBuscarResultado(inputValue);
     } else {
-      throw new CaixaWebCrawlerException("Oops! I couldn't find the second element '" + HTML_ELEMENT_SECOND + "'.");
+      throw new CaixaWebCrawlerException(
+          "Oops! I couldn't find the second element '" + HTML_ELEMENT_SECOND + "'.");
     }
   }
 
@@ -160,7 +159,8 @@ public class CaixaWebCrawlerService extends AbstractCrawlerService {
 
     if (caixaCrawlerStub.getLinkHref() != null
         && caixaCrawlerStub.getUrlBuscarResultado() != null) {
-      uriBuilder.setPath(this.caixaCrawlerStub.getLinkHref() + this.caixaCrawlerStub.getUrlBuscarResultado());
+      uriBuilder.setPath(
+          caixaCrawlerStub.getLinkHref() + caixaCrawlerStub.getUrlBuscarResultado());
       uriBuilder.addParameter("timestampAjax", Long.toString(System.currentTimeMillis()));
 
       if (caixaCrawlerStub.getConcurso() != null) {
@@ -172,10 +172,11 @@ public class CaixaWebCrawlerService extends AbstractCrawlerService {
   }
 
   private URIBuilder getUriBuilder() throws URISyntaxException {
-    StringBuilder url = new StringBuilder(BASE_URL);
+    StringBuilder url = new StringBuilder("http://loterias.caixa.gov.br");
 
     if (firstRequest) {
-      url.append(HOME_URL_PATH + this.caixaGameType.getPath());
+      url.append("/wps/portal/loterias");
+      url.append(caixaGameType.getPath());
     }
 
     return new URIBuilder(url.toString());

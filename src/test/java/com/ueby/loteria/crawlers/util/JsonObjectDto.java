@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
  * @author Algarves, Khristian
  */
 @NoArgsConstructor
-public class JsonObjectDtoTest {
+class JsonObjectDto {
 
   @Getter
   private String key;

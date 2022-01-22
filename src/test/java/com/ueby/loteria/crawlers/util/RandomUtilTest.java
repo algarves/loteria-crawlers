@@ -7,11 +7,11 @@ import org.junit.jupiter.api.Test;
 /**
  * @author Algarves, Khristian
  */
-public class RandomUtilTest {
+class RandomUtilTest {
 
   @DisplayName("Return a random number in the given range")
   @Test
-  public void shouldReturnRandomNumberInTheGivenRange() {
+  void shouldReturnRandomNumberInTheGivenRange() {
     final int rand = RandomUtil.getRandomNumInRange(1, 60);
 
     Assertions.assertTrue(rand >= 1 && rand <= 60);
@@ -19,7 +19,7 @@ public class RandomUtilTest {
 
   @DisplayName("Invalid Range Number")
   @Test
-  public void shouldThrowTheExceptionWhenInvalidRange() {
+  void shouldThrowTheExceptionWhenInvalidRange() {
     Exception exception = Assertions.assertThrows(IllegalArgumentException.class, () -> {
       RandomUtil.getRandomNumInRange(60, 1);
     });
@@ -32,10 +32,11 @@ public class RandomUtilTest {
 
   @DisplayName("Equals Range Number")
   @Test
-  public void shouldThrowTheExceptionWhenEqualsRange() {
+  void shouldThrowTheExceptionWhenEqualsRange() {
+    int expectedNumber = 1;
     int num = RandomUtil.getRandomNumInRange(1, 1);
 
-    Assertions.assertTrue(num == 1);
+    Assertions.assertEquals(expectedNumber, num);
   }
 
 }

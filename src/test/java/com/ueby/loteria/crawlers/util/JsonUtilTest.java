@@ -10,13 +10,13 @@ import java.util.Map;
 /**
  * @author Algarves, Khristian
  */
-public class JsonUtilTest {
+class JsonUtilTest {
 
   private static final String JSON_EXAMPLE = "{\"key\":\"value\"}";
 
   @DisplayName("Convert Object to JSON")
   @Test
-  public void shouldConvertObjectToJson() {
+  void shouldConvertObjectToJson() {
     Map<String, String> obj = new HashMap<String, String>();
     obj.put("key", "value");
 
@@ -26,16 +26,16 @@ public class JsonUtilTest {
 
   @DisplayName("JSON on object")
   @Test
-  public void shouldJsonOnObject() {
-    JsonObjectDtoTest obj = JsonUtil.fromJson(JSON_EXAMPLE, JsonObjectDtoTest.class);
+  void shouldJsonOnObject() {
+    JsonObjectDto obj = JsonUtil.fromJson(JSON_EXAMPLE, JsonObjectDto.class);
     Assertions.assertEquals("value", obj.getKey());
   }
 
   @DisplayName("Throw Nullpointer Exception from JSON")
   @Test
-  public void shouldThrowNullpointerExceptionFromJson() {
+  void shouldThrowNullpointerExceptionFromJson() {
     Exception exception = Assertions.assertThrows(NullPointerException.class, () -> {
-      JsonUtil.fromJson(null, JsonObjectDtoTest.class);
+      JsonUtil.fromJson(null, JsonObjectDto.class);
     });
 
     String expectedMessage = "Value cannot be null.";
@@ -46,7 +46,7 @@ public class JsonUtilTest {
 
   @DisplayName("Check if the json structure is valid")
   @Test
-  public void shouldIsValid() {
+  void shouldIsValid() {
     boolean isValid = JsonUtil.isValid(JSON_EXAMPLE);
     Assertions.assertEquals(Boolean.TRUE, isValid);
   }
