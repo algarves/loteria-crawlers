@@ -9,18 +9,18 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum CaixaGameType {
-
+  
   // @formatter:off
-  MEGA_SENA("/landing/megasena/"),
-  QUINA("/landing/quina/"),
-  LOTOFACIL("/landing/lotofacil/"),
-  LOTOMANIA("/landing/lotomania/"),
-  DUPLA_SENA("/landing/duplasena/"),
-  TIMEMANIA("/landing/timemania/"),
-  DIA_DE_SORTE("/landing/diadesorte/"),
-  LOTECA("/landing/loteca/"),
-  LOTERIA_FEDERAL("/landing/federal/"),
-  SUPER_SETE("/landing/supersete/");
+  MEGA_SENA("/megasena/"),
+  QUINA("/quina/"),
+  LOTOFACIL("/lotofacil/"),
+  LOTOMANIA("/lotomania/"),
+  DUPLA_SENA("/duplasena/"),
+  TIMEMANIA("/timemania/"),
+  DIA_DE_SORTE("/diadesorte/"),
+  LOTECA("/loteca/"),
+  LOTERIA_FEDERAL("/federal/"),
+  SUPER_SETE("/supersete/");
   // @formatter:on
 
   final String path;

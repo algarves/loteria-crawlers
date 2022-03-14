@@ -13,16 +13,12 @@ class CaixaCrawlerStubTest {
   @Test
   void shouldNewInstanceOfCaixaCrawlerStub() {
     CaixaCrawlerStub caixaCrawlerStub = new CaixaCrawlerStub.Builder()
-        .withLinkHref("LinkHref")
-        .withUrlBuscarResultado("UrlBuscarResultado")
         .withConcurso(1955)
-        .withHtmlContent("Html content")
+        .withResult("API response content")
         .build();
 
-    Assertions.assertEquals("LinkHref", caixaCrawlerStub.getLinkHref());
-    Assertions.assertEquals("UrlBuscarResultado", caixaCrawlerStub.getUrlBuscarResultado());
     Assertions.assertEquals(1955, caixaCrawlerStub.getConcurso());
-    Assertions.assertEquals("Html content", caixaCrawlerStub.getHtmlContent());
+    Assertions.assertEquals("API response content", caixaCrawlerStub.getResult());
   }
 
 }
