@@ -12,12 +12,8 @@ import lombok.*;
 @Builder(builderClassName = "Builder", setterPrefix = "with")
 public class CaixaCrawlerStub {
 
-  private String linkHref;
-
-  private String urlBuscarResultado;
-
   private Integer concurso;
 
-  private String htmlContent;
+  private String result;
 
 }
