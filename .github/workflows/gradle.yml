@@ -11,29 +11,45 @@ on:
     types: [opened, synchronize, reopened]
 
 jobs:
+
   build:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        distribution: [ 'adopt' ]
+        java: [ '8', '11', '13' ]
+    name: Build project with Java ${{ matrix.Java }} (${{ matrix.distribution }})
     steps:
       - uses: actions/checkout@v2
-      - name: Set up JDK 11
+
+      - name: Set up JDK
         uses: actions/setup-java@v2
         with:
-          java-version: '11'
-          distribution: 'adopt'
-      - name: Grant execute permission for gradlew
-        run: chmod +x gradlew
-
+          distribution: ${{ matrix.distribution }}
+          java-version: ${{ matrix.java }}
+          cache: 'gradle'
       - name: Build with Gradle
         run: ./gradlew --build-cache assemble
 
-#      - name: Test with Gradle
-#        run: ./gradlew check
+  test:
+    runs-on: ubuntu-latest
+    needs: build
+    strategy:
+      matrix:
+        distribution: [ 'adopt' ]
+        java: [ '11', '13' ]
+    name: Testing with Java ${{ matrix.Java }} (${{ matrix.distribution }})
+    steps:
+      - uses: actions/checkout@v2
 
+      - name: Set up JDK
+        uses: actions/setup-java@v2
+        with:
+          distribution: ${{ matrix.distribution }}
+          java-version: ${{ matrix.java }}
+          cache: 'gradle'
       - name: Generate test report with Gradle
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: ./gradlew test integrationTest jacocoTestReport sonarqube -Dsonar.verbose=true
-
-#      - name: Upload a Build Artifact
-#        run: ./gradlew publish
