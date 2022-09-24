@@ -55,8 +55,7 @@ public class CaixaWebCrawlerService extends AbstractCrawlerService {
   /**
    * Call whenever the result is invalid for the request.
    *
-   * @throws InterruptedException     When the process is interrupted.
-   * @throws CaixaWebCrawlerException If Number of attempts exhausted.
+   * @throws InterruptedException When the process is interrupted.
    */
   private void recall() throws InterruptedException {
     if (attempts <= MAX_ATTEMPTS) {
@@ -98,7 +97,7 @@ public class CaixaWebCrawlerService extends AbstractCrawlerService {
             responseStatus.getReasonPhrase());
       }
     } catch (CaixaWebCrawlerException e) {
-      log.error(e.getLocalizedMessage(), e);
+      log.error(e.getMessage(), e);
       try {
         recall();
       } catch (InterruptedException ie) {
